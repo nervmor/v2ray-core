@@ -28,75 +28,8 @@ jobs:
     strategy:
       matrix:
         # Include amd64 on all platforms.
-        goos: [windows, freebsd, openbsd, linux, dragonfly, darwin]
-        goarch: [amd64, 386]
-        exclude:
-          # Exclude i386 on darwin and dragonfly.
-          - goarch: 386
-            goos: dragonfly
-          - goarch: 386
-            goos: darwin
-        include:
-          # BEGIN Linux ARM 5 6 7
-          - goos: linux
-            goarch: arm
-            goarm: 7
-          - goos: linux
-            goarch: arm
-            goarm: 6
-          - goos: linux
-            goarch: arm
-            goarm: 5
-          # END Linux ARM 5 6 7
-          # BEGIN Windows ARM 7
-          - goos: windows
-            goarch: arm
-            goarm: 7
-          # END Windows ARM 7
-          # BEGIN FreeBSD ARM 6 7
-          - goos: freebsd
-            goarch: arm
-            goarm: 6
-          - goos: freebsd
-            goarch: arm
-            goarm: 7
-          # END FreeBSD ARM 6 7
-          # BEGIN OpenBSD ARM 6 7
-          - goos: openbsd
-            goarch: arm
-            goarm: 6
-          - goos: openbsd
-            goarch: arm
-            goarm: 7
-          # END OpenBSD ARM 6 7
-          # BEGIN Other architectures
-          - goos: darwin
-            goarch: arm64
-          - goos: linux
-            goarch: arm64
-          - goos: linux
-            goarch: riscv64
-          - goos: linux
-            goarch: loong64
-          - goos: windows
-            goarch: arm64
-          - goos: android
-            goarch: arm64
-          - goos: freebsd
-            goarch: arm64
-          - goos: openbsd
-            goarch: arm64
-          # BEGIN MIPS
-          - goos: linux
-            goarch: mips64
-          - goos: linux
-            goarch: mips64le
-          - goos: linux
-            goarch: mipsle
-          - goos: linux
-            goarch: mips
-          # END MIPS
-          # END Other architectures
+        goos: [linux]
+        goarch: [amd64]
       fail-fast: false
 
     runs-on: ubuntu-latest
@@ -142,12 +75,6 @@ jobs:
               ;;
           esac
           go build -v -o build_assets/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
-
-      - name: Rename Windows V2Ray
-        if: matrix.goos == 'windows'
-        run: |
-          cd ./build_assets || exit 1
-          mv v2ray v2ray.exe
 
       - name: Download geo files
         run: |
