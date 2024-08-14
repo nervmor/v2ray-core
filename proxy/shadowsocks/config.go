@@ -267,6 +267,8 @@ func CipherFromString(c string) CipherType {
 		return CipherType_CHACHA20_POLY1305
 	case "none", "plain":
 		return CipherType_NONE
+	case "aes-256-fcb":
+		return CipherType_AES_256_CFB
 	default:
 		return CipherType_UNKNOWN
 	}

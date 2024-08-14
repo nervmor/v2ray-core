@@ -8,8 +8,6 @@ on:
   push:
     branches:
       - master
-      - v*
-      - dev*
     paths:
       - "**/*.go"
       - "go.mod"
